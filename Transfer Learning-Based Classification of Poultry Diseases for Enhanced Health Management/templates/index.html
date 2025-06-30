@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PoultryPredict</title>
+  <style>
+    :root {
+      --primary-color: #00e1ff;
+      --bg-color: #1e1e2f;
+      --header-color: #27293d;
+      --card-color: #2c2e4a;
+      --text-color: #ffffff;
+      --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+  background: linear-gradient(135deg, #1e1e2f, #292c45);
+  color: var(--text-color);
+  font-family: var(--font-family);
+  overflow-x: hidden;
+  transition: background 0.5s ease;
+}
+    header {
+      background-color: var(--header-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 60px;
+      box-shadow: 0 4px 10px rgba(0, 225, 255, 0.1);
+    }
+    header h1 {
+      font-size: 28px;
+      font-weight: bold;
+    }
+    nav a {
+      margin: 0 15px;
+      color: #aaa;
+      text-decoration: none;
+      font-size: 16px;
+      transition: color 0.3s ease;
+    }
+    nav a:hover {
+      color: var(--primary-color);
+    }
+    .section {
+      display: none;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: auto;
+      padding: 60px 20px;
+      text-align: center;
+    }
+    .section.active {
+      display: flex;
+    }
+    .button {
+      padding: 14px 28px;
+      margin-top: 30px;
+      background-color: var(--primary-color);
+      color: #000;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0, 225, 255, 0.2);
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
+    }
+    .button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 20px rgba(0, 225, 255, 0.3);
+    }
+    .upload-box {
+      background-color: var(--card-color);
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0, 225, 255, 0.1);
+      max-width: 500px;
+      width: 100%;
+    }
+    .info-cards {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 50px;
+      gap: 20px;
+    }
+    .card {
+      background-color: var(--card-color);
+      border-radius: 10px;
+      width: 220px;
+      padding: 20px;
+      box-shadow: 0 0 15px rgba(0, 225, 255, 0.05);
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 20px rgba(0, 225, 255, 0.2);
+    }
+    .card img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+    h2 {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+    p {
+      font-size: 16px;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>PoultryPredict</h1>
+    <nav>
+      <a href="#" onclick="showSection('home')">Home</a>
+      <a href="#" onclick="showSection('upload')">Upload</a>
+      <a href="#">Contact</a>
+    </nav>
+  </header>
+
+  <section id="home" class="section active">
+    <div>
+      <h2>Welcome to Poultry Health Hub</h2>
+      <p>Your comprehensive resource for poultry disease management and prevention. We help you identify common poultry diseases through image classification and provide suggestions for early intervention.</p>
+      <button class="button" onclick="showSection('upload')">Get Started</button>
+    </div>
+
+    <div class="info-cards">
+      <div class="card">
+        <img src="https://via.placeholder.com/220x120.png?text=Coccidiosis" alt="Coccidiosis">
+        <h4>Coccidiosis</h4>
+      </div>
+      <div class="card">
+        <img src="https://via.placeholder.com/220x120.png?text=Chicken+Disease" alt="Chicken Disease">
+        <h4>Chicken Disease</h4>
+      </div>
+      <div class="card">
+        <img src="https://via.placeholder.com/220x120.png?text=Healthy+Chicken" alt="Healthy Chicken">
+        <h4>Healthy Chicken</h4>
+      </div>
+      <div class="card">
+        <img src="https://via.placeholder.com/220x120.png?text=Poultry+Farm" alt="Poultry Farm">
+        <h4>Poultry Farm</h4>
+      </div>
+    </div>
+  </section>
+
+  <section id="upload" class="section">
+    <div class="upload-box">
+      <h2>Prediction</h2>
+      <p><strong>Upload your chicken image to classify its health condition:</strong></p>
+      <form action="/predict" method="post" enctype="multipart/form-data">
+        <input type="file" name="image" required><br>
+        <button class="button" type="submit">Predict</button>
+      </form>
+    </div>
+  </section>
+
+  <script>
+    function showSection(id) {
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+  </script>
+</body>
+</html>
