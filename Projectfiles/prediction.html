@@ -1,0 +1,90 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Prediction Page</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-black text-white min-h-screen flex flex-col sm:p-x-2 md:p-x-6 lg:p-x-8">
+
+  <!-- Header -->
+  <header class="flex justify-between items-center px-6 py-4 border-b border-gray-800">
+    <div class="text-2xl font-bold">🐔 PoultryDetect</div>
+    <nav class="space-x-6">
+      <a href="/" class="hover:underline">HOME</a>
+      <a href="/upload" class="hover:underline">PREDICTION</a>
+    </nav>
+  </header>
+
+  <!-- Main Container -->
+  <main class="flex-1 flex flex-col justify-center items-center px-4 py-10">
+    <h1 class="text-3xl font-semibold mb-2">Prediction</h1>
+    <h3 class="text-lg text-gray-300 mb-6">Upload a poultry image to classify its health status</h3>
+
+    <form action="/upload" method="POST" enctype="multipart/form-data" class="bg-gray-900 p-6 rounded-lg shadow-lg w-full max-w-md">
+      <label for="file" class="block mb-3 font-semibold">Upload Your Image:</label>
+      <input 
+        type="file" 
+        name="file" 
+        id="file-input"
+        accept=".jpg,.jpeg,.png" 
+        required 
+        onchange="previewImage(event)"
+        class="w-full p-2 mb-4 text-black rounded focus:outline-none focus:ring-2 focus:ring-green-500"
+      >
+      <img id="preview" class="mx-auto mt-4 rounded shadow-lg hidden" width="200" />
+      
+      <button 
+        type="submit" 
+        class="w-full mt-4 bg-green-600 hover:bg-green-700 text-white font-bold py-2 rounded transition duration-300"
+      >
+        Predict
+      </button>
+    </form>
+
+    {% if prediction %}
+    <div class="mt-8 p-4 {% if prediction != 'Healthy' %}bg-red-700{% else %}bg-green-700{% endif %} text-white rounded shadow-md text-center">
+      <p class="text-lg font-semibold">Prediction Result:</p>
+      <p class="text-xl mt-2 {% if prediction != 'Healthy' %}text-red-200{% else %}text-lime-300{% endif %} font-bold tracking-wide">
+        {{ prediction }}
+      </p>
+    </div>
+
+    {% if prediction != 'Healthy' %}
+    <div class="mt-4 p-4 bg-red-800 rounded text-sm text-red-100 max-w-xl text-center">
+      <h4 class="font-semibold text-red-200 mb-2">Recommendation</h4>
+      <p>
+        Please consult a veterinarian. Isolate the affected birds and follow appropriate treatment procedures for <strong>{{ prediction }}</strong>.
+      </p>
+    </div>
+    {% endif %}
+    {% endif %}
+  </main>
+
+  <!-- Footer -->
+  <footer class="text-center py-4 border-t border-gray-800 text-gray-400 text-sm">
+    © 2025 PoultryDetect | All rights reserved.
+  </footer>
+
+  <!-- Image Preview Script -->
+  <script>
+    function previewImage(event) {
+      const preview = document.getElementById('preview');
+      const file = event.target.files[0];
+      if (file) {
+        preview.src = URL.createObjectURL(file);
+        preview.classList.remove('hidden');
+      }
+    }
+  </script>
+
+</body>
+</html>
